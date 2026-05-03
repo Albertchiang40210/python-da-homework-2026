@@ -17,10 +17,7 @@ from plotly.subplots import make_subplots
 # ============================================================
 # 🟢 送分題（每題 10 分，共 30 分）
 # ============================================================
-import pandas as pd
-import plotly.express as px
-import plotly.graph_objects as go
-from plotly.subplots import make_subplots
+
 def green_plotly_bar():
     df = pd.read_csv('datasets/ecommerce/orders_enriched.csv')
     """
@@ -37,12 +34,7 @@ def green_plotly_bar():
     fig.update_layout(height=400, showlegend=False)
     return fig
 green_plotly_bar()
-    pass
 
-import pandas as pd
-import plotly.express as px
-import plotly.graph_objects as go
-from plotly.subplots import make_subplots
 def green_plotly_line():
     df = pd.read_csv('datasets/ecommerce/orders_enriched.csv')
     df['order_date'] = pd.to_datetime(df['order_date'])
@@ -60,12 +52,7 @@ def green_plotly_line():
     fig.update_layout
     return fig
 green_plotly_line()
-    pass
 
-import pandas as pd
-import plotly.express as px
-import plotly.graph_objects as go
-from plotly.subplots import make_subplots
 def green_plotly_pie():
     df = pd.read_csv('datasets/ecommerce/orders_enriched.csv')
     """
@@ -81,15 +68,12 @@ def green_plotly_pie():
     fig.update_layout(height=400)
     return fig
 green_plotly_pie()
-    pass
 
 
 # ============================================================
 # 🟡 核心題（每題 15 分，共 45 分）
 # ============================================================
 
-import pandas as pd
-import numpy as np
 def yellow_clean_and_merge(order_path, customers_path, products_path):
     df = pd.read_csv(order_path)
     customers = pd.read_csv(customers_path)
@@ -128,10 +112,7 @@ enriched = (
     .merge(customers, on='customer_id', how='left')
     .merge(products, on='product_id', how='left')
 )
-    pass
 
-import pandas as pd
-import numpy as np
 def yellow_kpi_summary(enriched):
     """
     計算 4 個核心 KPI，回傳 dict：
@@ -154,13 +135,7 @@ def yellow_kpi_summary(enriched):
 kpis = yellow_kpi_summary(orders) 
 for k, v in kpis.items():
     print(f'{k}: {v:>12,.0f}')
-    pass
 
-import matplotlib
-matplotlib.use("Agg")
-import matplotlib.pyplot as plt
-import pandas as pd
-import seaborn as sns
 def yellow_plotly_scatter(df):
     """
     用 Plotly Express 畫互動散佈圖：
@@ -179,7 +154,6 @@ def yellow_plotly_scatter(df):
     fig.update_layout(height=450)
     return fig
 yellow_plotly_scatter(orders)
-    pass
 
 
 # ============================================================
