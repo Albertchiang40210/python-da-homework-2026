@@ -19,6 +19,7 @@ def _load_data():
 # ============================================================
 # 🟢 送分題（每題 10 分，共 30 分）
 # ============================================================
+df = _load_data()
 def green_avg_by_month(df):
     """
     計算每個月份 (1~12) 的平均訂單金額
@@ -31,7 +32,7 @@ def green_avg_by_month(df):
 green_avg_by_month(df)
 
 
-def green_top3_dates():
+def green_top3_dates(df):
     """
     找出訂單數最多的前 3 個日期
     回傳 Series（index=日期, values=訂單數, 由多到少排序）
@@ -43,20 +44,13 @@ def green_top3_dates():
 green_top3_dates()
 
 import numpy as np
-df = pd.read_csv('./datasets/ecommerce/orders_enriched.csv')
-def green_date_range():
-    df['order_date'] = pd.to_datetime(df['order_date'])
+def green_date_range(df):
     """
     回傳資料的日期範圍 tuple: (最早日期, 最晚日期)
     格式為 pandas Timestamp
     """
+    return (df['order_date'].min(), df['order_date'].max())
     # TODO: 你的程式碼
-    df['year'] = df['order_date'].dt.year
-    df['month'] = df['order_date'].dt.month
-    df['weekday'] = df['order_date'].dt.day_name
-    df['year_mon'] = df['order_date'].dt.to_period('M')
-    print('日期範圍:',df['order_date'].min(),'~',df['order_date'].max())
-    return (df['order_date'].min(),df['order_date'].max())
 green_date_range()
 
 
@@ -78,20 +72,16 @@ yellow_monthly_revenue()
 
 import numpy as np
 def yellow_rolling_avg():
-    ts = df.set_index('order_date').sort_index()
-    monthly_orders = ts['amount'].resample('ME').sum()
-    monthly_orders_ma3 = monthly_orders.rolling(window=3).mean().round(1)
     """
     計算 3 個月移動平均
     接收 yellow_monthly_revenue() 的結果作為輸入
     回傳 Series（同樣 index，values=移動平均，前 2 筆可為 NaN）
     提示：.rolling(window=3).mean()
     """
+    ts = df.set_index('order_date').sort_index()
+    monthly_orders = ts['amount'].resample('ME').sum()
+    return monthly_orders.rolling(window=3).mean().round(1)
     # TODO: 你的程式碼
-    result = pd.DataFrame({
-        '3個月移動平均': monthly_orders_ma3,
-    })
-    return monthly_orders_ma3
 yellow_rolling_avg()
 
 import numpy as np

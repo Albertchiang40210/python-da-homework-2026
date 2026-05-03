@@ -23,7 +23,7 @@ def green_mean():
     total_sum = np.sum(data)
     average = total_sum / len(data)
     return float(average)
-print(green_mean())
+# green_mean()
 
 
 def green_double():
@@ -32,7 +32,7 @@ def green_double():
     data = np.array([10, 20, 30, 40, 50])
     total_sum = data * 2
     return total_sum
-print(green_double)
+# green_double()
 
 
 def green_filter():
@@ -42,7 +42,7 @@ def green_filter():
     mask = data > 25
     result = data[mask]
     return result
-print(green_filter())
+# green_filter()
 
 
 # ============================================================
@@ -59,7 +59,7 @@ def yellow_expensive_count(prices):
     num_expensive = mask_expensive.sum()
     return int(num_expensive)
 prices = np.genfromtxt(DATA, delimiter=',', skip_header=1, usecols=3)
-print(f'單價 > 1000 的商品數＝{yellow_expensive_count(prices)}個')
+# print(f'單價 > 1000 的商品數＝{yellow_expensive_count(prices)}個')
 
 
 DATA = './datasets/ecommerce/products.csv'
@@ -75,7 +75,7 @@ def yellow_top3_stock_indices(stocks):
     return top3_idx
 stocks = np.genfromtxt(DATA, delimiter=',', skip_header=1, usecols=4)
 top3_idx = yellow_top3_stock_indices(stocks)
-print(f'庫存前3名索引＝{top3_idx}')
+# print(f'庫存前3名索引＝{top3_idx}')
 
 
 DATA = './datasets/ecommerce/products.csv'
@@ -89,11 +89,11 @@ def yellow_restock_cost(prices, stocks):
     mask_cheap = prices < 500
     cheap_prices = prices[mask_cheap]
     total_cost = (cheap_prices * 50).sum()
-    print(f'便宜商品數量 ＝{mask_cheap.sum()}項')
-    print(f'總進貨成本 ＝ NT$ {total_cost:,.0f}')
+    # print(f'便宜商品數量 ＝{mask_cheap.sum()}項')
+    # print(f'總進貨成本 ＝ NT$ {total_cost:,.0f}')
     return total_cost
 result = yellow_restock_cost(prices, stocks)
-print(result)
+# print(result)
 
 
 # ============================================================

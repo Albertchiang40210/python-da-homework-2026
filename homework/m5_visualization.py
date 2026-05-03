@@ -22,7 +22,7 @@ def _load_data():
 # 🟢 送分題（每題 10 分，共 30 分）
 # ============================================================
 
-def green_bar_category():
+def green_bar_category(df):
     """
     畫出每個商品類別 (category) 的訂單數長條圖
     回傳 matplotlib Figure 物件
@@ -43,13 +43,12 @@ def green_bar_category():
 
     for i, v in enumerate(cat_counts['order_count']):
         plt.text(i, v, f'{v:,}', ha='center', va='bottom', fontsize=10)
-
     plt.tight_layout()
     return fig
-green_bar_category()
+# green_bar_category()
 
 
-def green_hist_amount():
+def green_hist_amount(df):
     """
     畫出訂單金額 (amount) 的分佈直方圖，分 20 個 bin
     回傳 matplotlib Figure 物件
@@ -63,9 +62,9 @@ def green_hist_amount():
     plt.ylabel('Frequency')
     plt.tight_layout()
     return fig
-green_hist_amount()
+# green_hist_amount()
 
-def green_set_labels():
+def green_set_labels(df):
     """
     建立一個簡單的長條圖（內容不限），但必須設定：
     - 圖標題 (title)
@@ -84,15 +83,15 @@ def green_set_labels():
 
     for i, v in enumerate(region_rev['amount']):
         plt.text(i, v, f'{v:,.0f}', ha='center', va='bottom', fontsize=10)
-        plt.tight_layout()
-        return fig
-green_set_labels()
+    plt.tight_layout()
+    return fig
+# green_set_labels()
 
 
 # ============================================================
 # 🟡 核心題（每題 15 分，共 45 分）
 # ============================================================
-def yellow_line_region_trend():
+def yellow_line_region_trend(df):
     """
     畫折線圖：比較 North 和 South 兩個地區的月營收趨勢
     - X 軸：月份
@@ -121,7 +120,7 @@ def yellow_line_region_trend():
     plt.ylabel('Revenue (NT$)')
     plt.xticks(rotation=45)
     plt.legend(title="Region")
-    plt.tight_layout
+    plt.tight_layout()
     return fig
 yellow_line_region_trend()
 
@@ -139,10 +138,10 @@ def yellow_box_vip():
         x='vip_level',
         y='amount',
         hue='vip_level',
-        palett='Set3',
+        palette='Set3',
         legend=False,
     )
-    plt.title('Order Amount Distribution by VIP Level'), fontweight='bold'
+    plt.title('Order Amount Distribution by VIP Level', fontweight='bold')
     plt.xlabel('VIP Level')
     plt.ylabel('Amount (NT$)')
     plt.tight_layout()

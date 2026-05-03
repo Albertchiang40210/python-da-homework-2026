@@ -26,7 +26,7 @@ def green_read_csv():
     raw = pd.read_csv(DATA)
     return raw
 df = green_read_csv()
-print(df.head())
+# print(df.head())
 
 
 import numpy as np
@@ -39,7 +39,7 @@ def green_shape(df):
     # TODO: 你的程式碼
     return df.shape
 raw = pd.read_csv(DATA)
-print(f'資料型態 =',raw.shape)
+# print(f'資料型態 =',raw.shape)
 
 
 import numpy as np
@@ -52,7 +52,7 @@ def green_dtypes(df):
     # TODO: 你的程式碼
     return df.dtypes
 raw = pd.read_csv(DATA)
-print(f'資料型態 =',raw.dtypes)
+# print(f'資料型態 =',raw.dtypes)
 
 
 # ============================================================
@@ -69,11 +69,12 @@ def yellow_clean_columns(df):
     提示：df.columns.str.strip().str.lower()
     """
     # TODO: 你的程式碼
-    df.columns = df.columns.str.strip().str.lower()
-    return df
+    new_df = df.copy()
+    new_df.columns = new_df.columns.str.strip().str.lower()
+    return new_df
 df = pd.read_csv('./datasets/ecommerce/orders_raw.csv')
 df = yellow_clean_columns(df)
-print('清理後欄名：',list(df.columns))
+# print('清理後欄名：',list(df.columns))
 
 
 import numpy as np
@@ -86,17 +87,17 @@ def yellow_clean_amount(df):
     提示：.str.replace() + .astype(float)
     """
     # TODO: 你的程式碼
-    df['amount'] = (
-        df['amount']
+    new_df = df.copy()
+    new_df['amount'] = (
+        new_df['amount']
         .astype(str)
         .str.replace('$','', regex=False)
         .str.replace(',','', regex=False)
-        .str.strip()
         .astype(float)
     )
-    return df
+    return new_df
 df = yellow_clean_amount(df)
-print('\n清理後 amount 型別:', df['amount'].dtype)
+# print('\n清理後 amount 型別:', df['amount'].dtype)
 
 import numpy as np
 DATA = './datasets/ecommerce/orders_raw.csv'
@@ -106,10 +107,10 @@ def yellow_drop_duplicates(df):
     提示：df.drop_duplicates()
     """
     # TODO: 你的程式碼
-    print('重複列數:',df.duplicated().sum())
+    # print('重複列數:',df.duplicated().sum())
     df = df.drop_duplicates()
-    print('去重後形狀:',df.shape)
-    return df
+    # print('去重後形狀:',df.shape)
+    return df.drop_duplicates().copy()
 df = yellow_drop_duplicates(df)
 
 

@@ -33,7 +33,7 @@ def green_plotly_bar():
     fig.update_traces(texttemplate='%{text:,.0f}', textposition='outside')
     fig.update_layout(height=400, showlegend=False)
     return fig
-green_plotly_bar()
+# green_plotly_bar()
 
 def green_plotly_line():
     df = pd.read_csv('datasets/ecommerce/orders_enriched.csv')
@@ -49,9 +49,9 @@ def green_plotly_line():
     monthly = df.groupby('month', as_index=False)['amount'].sum()
     fig = px.line(monthly, x='month', y='amount',markers=True,
                   title='Monthly Revenue Trend')
-    fig.update_layout
+    fig.update_layout(height=400, title_x=0.5)
     return fig
-green_plotly_line()
+# green_plotly_line()
 
 def green_plotly_pie():
     df = pd.read_csv('datasets/ecommerce/orders_enriched.csv')
@@ -62,9 +62,9 @@ def green_plotly_pie():
     提示：px.pie()
     """
     # TODO: 你的程式碼
-    vip_rev = df.groupby('vip_level',as_index=False)['amount'].sum()
-    fig = px.pie(vip_rev,names='vip_level',values='amount',
-                 title='VIP_Level Share', hole=0.4)
+    vip_rev = df.groupby('vip_level').size().reset_index(name='count')
+
+    fig = px.pie(vip_rev,names='vip_level',values='count',title='VIP Level Share',hole=0.4)
     fig.update_layout(height=400)
     return fig
 green_plotly_pie()
@@ -126,10 +126,10 @@ def yellow_kpi_summary(enriched):
     # TODO: 你的程式碼
     enriched['month'] = enriched['order_date'].dt.to_period('M').astype(str)
     kpis = {
-        '總營收':enriched['amount'].sum(),
-        '總訂單數':len(enriched),
-        '不重複客戶數':enriched['customer_id'].nunique(),
-        '平均客單價':enriched['amount'].sum() / len(enriched),        
+    "total_revenue": enriched['amount'].sum(),
+    "order_count": len(enriched),
+    "active_customers": enriched['customer_id'].nunique(),
+    "avg_order_value": enriched['amount'].mean(),
     }
     return kpis
 kpis = yellow_kpi_summary(orders) 
@@ -149,11 +149,11 @@ def yellow_plotly_scatter(df):
     # TODO: 你的程式碼
     fig = px.scatter(df, x='unit_price', y='amount',
     color='category', hover_data=['product_name','customer_name'],
-    title='Unot Price vx Order Amount'
+    title='Unit Price vs Order Amount'
     )
-    fig.update_layout(height=450)
+    # fig.update_layout(height=450)
     return fig
-yellow_plotly_scatter(orders)
+# yellow_plotly_scatter(orders)
 
 
 # ============================================================

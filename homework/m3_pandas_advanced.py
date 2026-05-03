@@ -48,6 +48,7 @@ customers = pd.read_csv(f'{DATA}/customers.csv')
 products = pd.read_csv(f'{DATA}/products.csv')
 def green_row_count(df):
     """回傳 DataFrame 的列數 (int)"""
+    return len(df)
     # TODO: 你的程式碼
 print('orders:' , orders.shape)
 print('customers:', customers.shape)
@@ -59,8 +60,9 @@ DATA = './datasets/ecommerce'
 orders = pd.read_csv(f'{DATA}/orders_clean.csv',parse_dates=['order_date'])
 customers = pd.read_csv(f'{DATA}/customers.csv')
 products = pd.read_csv(f'{DATA}/products.csv')
-def green_load_and_merge():
-  """回傳 DataFrame 的所有欄位名稱 (list)"""
+def green_columns(df):
+    """回傳 DataFrame 的所有欄位名稱 (list)"""
+    return list(df.columns)
     # TODO: 你的程式碼
 print('orders:' , list(orders.columns))
 print('customers:', list(customers.columns))
@@ -102,8 +104,8 @@ def yellow_gold_vip_stats(df):
     gold_stat = gold['amount'].agg(['count','sum'])
     order_count = int(gold_stat['count'])
     total_amount = float(gold_stat['sum'])
-    print(f'訂單數:{int(gold_stat['count'])}')
-    print(f'總金額:{gold_stat['sum']:,.0f}')
+    print(f"訂單數:{int(gold_stat['count'])}")
+    print(f"總金額:{gold_stat['sum']:,.0f}")
     return (order_count, total_amount)
 result = yellow_gold_vip_stats(df_final)
 
