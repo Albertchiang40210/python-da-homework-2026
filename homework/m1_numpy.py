@@ -19,18 +19,32 @@ import numpy as np
 def green_mean():
     """建立 [10, 20, 30, 40, 50]，回傳所有元素的平均值 (float)"""
     # TODO: 你的程式碼
+    data = np.array([10, 20, 30, 40, 50])
+    total_sum = np.sum(data)
+    average = total_sum / len(data)
+    return float(average)
+print(green_mean())
     pass
 
 
 def green_double():
     """建立 [10, 20, 30, 40, 50]，回傳所有元素乘以 2 的 ndarray"""
     # TODO: 你的程式碼
+    data = np.array([10, 20, 30, 40, 50])
+    total_sum = data * 2
+    return total_sum
+print(green_double)
     pass
 
 
 def green_filter():
     """建立 [10, 20, 30, 40, 50]，回傳大於 25 的元素 (ndarray)"""
     # TODO: 你的程式碼
+    data = np.array([10, 20, 30, 40, 50])
+    mask = data > 25
+    result = data[mask]
+    return result
+print(green_filter())
     pass
 
 
@@ -39,11 +53,22 @@ def green_filter():
 # 以下函式會接收從 products.csv 讀出的 prices, stocks 陣列
 # ============================================================
 
+import numpy as np
+DATA = './datasets/ecommerce/products.csv'
+
 def yellow_expensive_count(prices):
     """回傳單價 > 1000 的商品數量 (int)"""
     # TODO: 你的程式碼
+    mask_expensive = prices > 1000
+    num_expensive = mask_expensive.sum()
+    return int(num_expensive)
+prices = np.genfromtxt(DATA, delimiter=',', skip_header=1, usecols=3)
+print(f'單價 > 1000 的商品數＝{yellow_expensive_count(prices)}個')
     pass
 
+
+import numpy as np
+DATA = './datasets/ecommerce/products.csv'
 
 def yellow_top3_stock_indices(stocks):
     """
@@ -51,8 +76,17 @@ def yellow_top3_stock_indices(stocks):
     提示：np.argsort
     """
     # TODO: 你的程式碼
+    sorted_idx = np.argsort(stocks)
+    top3_idx = sorted_idx[-3:][::-1]
+    return top3_idx
+stocks = np.genfromtxt(DATA, delimiter=',', skip_header=1, usecols=4)
+top3_idx = yellow_top3_stock_indices(stocks)
+print(f'庫存前3名索引＝{top3_idx}')
     pass
 
+
+import numpy as np
+DATA = './datasets/ecommerce/products.csv'
 
 def yellow_restock_cost(prices, stocks):
     """
@@ -60,6 +94,14 @@ def yellow_restock_cost(prices, stocks):
     提示：布林遮罩 + .sum()
     """
     # TODO: 你的程式碼
+    mask_cheap = prices < 500
+    cheap_prices = prices[mask_cheap]
+    total_cost = (cheap_prices * 50).sum()
+    print(f'便宜商品數量 ＝{mask_cheap.sum()}項')
+    print(f'總進貨成本 ＝ NT$ {total_cost:,.0f}')
+    return total_cost
+result = yellow_restock_cost(prices, stocks)
+print(result)
     pass
 
 

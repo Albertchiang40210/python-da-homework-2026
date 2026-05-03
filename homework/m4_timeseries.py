@@ -19,17 +19,21 @@ def _load_data():
 # ============================================================
 # 🟢 送分題（每題 10 分，共 30 分）
 # ============================================================
-
-def green_avg_by_month():
+import pandas as pd
+def green_avg_by_month(df):
     """
     計算每個月份 (1~12) 的平均訂單金額
     回傳 Series（index=月份 1~12, values=平均金額）
     提示：df['order_date'].dt.month
     """
     # TODO: 你的程式碼
+    avg_by_month = (df.groupby(df['order_date'].dt.month)['amount'].mean().round(1))
+    return avg_by_month
+green_avg_by_month(df)
+
     pass
 
-
+import pandas as pd
 def green_top3_dates():
     """
     找出訂單數最多的前 3 個日期
@@ -37,22 +41,36 @@ def green_top3_dates():
     提示：value_counts().head(3)
     """
     # TODO: 你的程式碼
+    top3_dates = df['order_date'].dt.date.value_counts().head(3)
+    return top3_dates
+green_top3_dates()
     pass
 
-
+import pandas as pd
+import numpy as np
+df = pd.read_csv('./datasets/ecommerce/orders_enriched.csv')
 def green_date_range():
+    df['order_date'] = pd.to_datetime(df['order_date'])
     """
     回傳資料的日期範圍 tuple: (最早日期, 最晚日期)
     格式為 pandas Timestamp
     """
     # TODO: 你的程式碼
+    df['year'] = df['order_date'].dt.year
+    df['month'] = df['order_date'].dt.month
+    df['weekday'] = df['order_date'].dt.day_name
+    df['year_mon'] = df['order_date'].dt.to_period('M')
+    print('日期範圍:',df['order_date'].min(),'~',df['order_date'].max())
+    return (df['order_date'].min(),df['order_date'].max())
+green_date_range()
     pass
 
 
 # ============================================================
 # 🟡 核心題（每題 15 分，共 45 分）
 # ============================================================
-
+import pandas as pd
+import numpy as np
 def yellow_monthly_revenue():
     """
     計算每月總營收
@@ -60,10 +78,18 @@ def yellow_monthly_revenue():
     提示：set_index('order_date').resample('ME')['amount'].sum()
     """
     # TODO: 你的程式碼
+    ts = df.set_index('order_date').sort_index()
+    monthly_orders = ts['amount'].resample('ME').sum()
+    return monthly_orders
+yellow_monthly_revenue()
     pass
 
-
-def yellow_rolling_avg(monthly_revenue):
+import pandas as pd
+import numpy as np
+def yellow_rolling_avg():
+    ts = df.set_index('order_date').sort_index()
+    monthly_orders = ts['amount'].resample('ME').sum()
+    monthly_orders_ma3 = monthly_orders.rolling(window=3).mean().round(1)
     """
     計算 3 個月移動平均
     接收 yellow_monthly_revenue() 的結果作為輸入
@@ -71,9 +97,15 @@ def yellow_rolling_avg(monthly_revenue):
     提示：.rolling(window=3).mean()
     """
     # TODO: 你的程式碼
+    result = pd.DataFrame({
+        '3個月移動平均': monthly_orders_ma3,
+    })
+    return monthly_orders_ma3
+yellow_rolling_avg()
     pass
 
-
+import pandas as pd
+import numpy as np
 def yellow_category_median(df):
     """
     計算每個商品類別 (category) 的訂單金額中位數，由高到低排序
@@ -81,6 +113,14 @@ def yellow_category_median(df):
     提示：groupby + median + sort_values
     """
     # TODO: 你的程式碼
+    medias_by_cat = (
+        df.groupby('category')['amount']
+        .median()
+        .sort_values(ascending=False)
+        .round(1)
+    )
+    return medias_by_cat
+yellow_category_median(df)
     pass
 
 

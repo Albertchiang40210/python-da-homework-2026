@@ -16,6 +16,13 @@ import pandas as pd
 # 🟢 送分題（每題 10 分，共 30 分）
 # ============================================================
 
+
+import pandas as pd
+import numpy as np
+DATA = './datasets/ecommerce'
+orders = pd.read_csv(f'{DATA}/orders_clean.csv',parse_dates=['order_date'])
+customers = pd.read_csv(f'{DATA}/customers.csv')
+products = pd.read_csv(f'{DATA}/products.csv')
 def green_load_and_merge():
     """
     讀取三張表，合併成一張完整的 DataFrame 並回傳
@@ -24,24 +31,52 @@ def green_load_and_merge():
     提示：pd.merge(how='left')
     """
     # TODO: 你的程式碼
+    full = (
+        orders
+        .merge(customers, on='customer_id', how='left')
+        .merge(products, on='product_id', how='left')
+    )
+    print('三表合併後形狀', full.shape)
+    print('欄位', list(full.columns))
+    return full
+df_final = green_load_and_merge()
+df_final.head() 
     pass
 
-
+import pandas as pd
+import numpy as np
+DATA = './datasets/ecommerce'
+orders = pd.read_csv(f'{DATA}/orders_clean.csv',parse_dates=['order_date'])
+customers = pd.read_csv(f'{DATA}/customers.csv')
+products = pd.read_csv(f'{DATA}/products.csv')
 def green_row_count(df):
     """回傳 DataFrame 的列數 (int)"""
     # TODO: 你的程式碼
+print('orders:' , orders.shape)
+print('customers:', customers.shape)
+print('products:' , products.shape)
     pass
 
 
-def green_column_list(df):
-    """回傳 DataFrame 的所有欄位名稱 (list)"""
+import pandas as pd
+import numpy as np
+DATA = './datasets/ecommerce'
+orders = pd.read_csv(f'{DATA}/orders_clean.csv',parse_dates=['order_date'])
+customers = pd.read_csv(f'{DATA}/customers.csv')
+products = pd.read_csv(f'{DATA}/products.csv')
+def green_load_and_merge():
+  """回傳 DataFrame 的所有欄位名稱 (list)"""
     # TODO: 你的程式碼
+print('orders:' , list(orders.columns))
+print('customers:', list(customers.columns))
+print('products:' , list(products.columns))
     pass
 
 
 # ============================================================
 # 🟡 核心題（每題 15 分，共 45 分）
 # ============================================================
+
 
 def yellow_top_category(df):
     """
@@ -50,6 +85,16 @@ def yellow_top_category(df):
     提示：groupby('category')['amount'].sum()
     """
     # TODO: 你的程式碼
+    category_summary = (
+        df.groupby(['category'])['amount']
+        .sum()
+        .reset_index()
+        .sort_values(['amount'],ascending=[False])
+    )
+    top_cat = category_summary.iloc[0]['category']
+    return top_cat
+result = yellow_top_category(df_final)
+print(result)
     pass
 
 
@@ -60,6 +105,14 @@ def yellow_gold_vip_stats(df):
     提示：df[df['vip_level'] == 'Gold']
     """
     # TODO: 你的程式碼
+    gold =df[df['vip_level'] == 'Gold']
+    gold_stat = gold['amount'].agg(['count','sum'])
+    order_count = int(gold_stat['count'])
+    total_amount = float(gold_stat['sum'])
+    print(f'訂單數:{int(gold_stat['count'])}')
+    print(f'總金額:{gold_stat['sum']:,.0f}')
+    return (order_count, total_amount)
+result = yellow_gold_vip_stats(df_final)
     pass
 
 
@@ -70,6 +123,16 @@ def yellow_region_avg_amount(df):
     提示：groupby('region')['amount'].mean()
     """
     # TODO: 你的程式碼
+    region_mean = (
+        df.groupby('region')['amount']
+        .mean()
+        .round(2)
+        .sort_values(ascending=False)
+    )
+    print(region_mean)
+    return region_mean
+result_series = yellow_region_avg_amount(df_final)
+    
     pass
 
 
