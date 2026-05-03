@@ -53,7 +53,6 @@ print(green_filter())
 # 以下函式會接收從 products.csv 讀出的 prices, stocks 陣列
 # ============================================================
 
-import numpy as np
 DATA = './datasets/ecommerce/products.csv'
 
 def yellow_expensive_count(prices):
@@ -67,7 +66,6 @@ print(f'單價 > 1000 的商品數＝{yellow_expensive_count(prices)}個')
     pass
 
 
-import numpy as np
 DATA = './datasets/ecommerce/products.csv'
 
 def yellow_top3_stock_indices(stocks):
@@ -85,7 +83,6 @@ print(f'庫存前3名索引＝{top3_idx}')
     pass
 
 
-import numpy as np
 DATA = './datasets/ecommerce/products.csv'
 
 def yellow_restock_cost(prices, stocks):
