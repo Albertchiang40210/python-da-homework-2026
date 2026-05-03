@@ -20,8 +20,8 @@ def green_read_csv():
     提示：pd.read_csv()
     """
     # TODO: 你的程式碼
-    DATA = "/datasets/ecommerce/orders_raw.csv"
-    df = pd.read_csv(DATA)
+    data_path = "/datasets/ecommerce/orders_raw.csv"
+    df = pd.read_csv(data_path)
     return df
 
 
@@ -69,12 +69,13 @@ def yellow_clean_amount(df):
     提示：.str.replace() + .astype(float)
     """
     # TODO: 你的程式碼
-    arr = (df['amount']
-                .astype(str)
-                .str.replace('$', '', regex=False)
-                .str.replace(',', '', regex=False)
-                .astype(float))
-    return arr
+    new_df = df.copy()
+    new_df['amount'] = (new_df['amount']
+                        .astype(str)
+                        .str.replace('$', '', regex=False)
+                        .str.replace(',', '', regex=False)
+                        .astype(float))
+    return new_df
 
 
 def yellow_drop_duplicates(df):
